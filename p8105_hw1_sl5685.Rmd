@@ -29,7 +29,7 @@ library(tidyverse)
 ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
   geom_point()
 
-ggsave("penguins_plot.pdf", height = 4, width = 4)
+ggsave("penguins_plot.pdf", height = 4, width = 10)
 ```
 
 ## Problem 2
