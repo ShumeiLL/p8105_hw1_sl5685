@@ -1,0 +1,81 @@
+---
+title: "p8105_hw1_sl5685"
+author: "Shumei Liu"
+date: "2024-09-21"
+output: github_document
+---
+
+## Problem 1
+```{r}
+data("penguins", package = "palmerpenguins")
+```
+
+The dataset contains information on species, island, bill length (mm), bill depth (mm), flipper length (mm), body mass (g), sex and year for different penguin species.
+
+* species: The penguin species.
+* island: The island where the penguins were observed.
+* bill_length_mm: The length of the penguins' bill (in mm).
+* bill_depth_mm: The bill depth (in mm)  
+* flipper_length_mm: The length of the penguins' flipper (in mm).
+* body_mass_g: The body mass of the penguins (in grams).
+* sex: The sex of the penguin.
+
+The dataset has `r nrow(penguins)` rows and `r ncol(penguins)` columns. 
+The mean flipper length is `r mean(penguins$flipper_length_mm, na.rm = TRUE)` mm.
+
+```{r}
+library(tidyverse)
+
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+  geom_point()
+
+ggsave("penguins_plot.pdf", height = 4, width = 4)
+```
+
+## Problem 2
+
+#### Data frame
+```{r}
+df <- data.frame(
+  numeric_var = rnorm(10),  # Random sample from standard normal distribution
+  logical_var = rnorm(10) > 0,  # Logical vector
+  char_var = letters[1:10],  # Character vector
+  factor_var = factor(rep(c("a", "b", "c"), length.out = 10))  # Factor vector
+)
+df
+```
+
+#### Mean
+```{r}
+mean_numeric <- mean(df %>% pull(numeric_var))  # This works
+mean_numeric
+
+mean_logical <- mean(df %>% pull(logical_var))  # This works
+mean_logical
+
+# mean_char <- mean(df %>% pull(char_var))  # Not work
+
+# mean_factor <- mean(df %>% pull(factor_var))  # Not work 
+```
+
+```{r}
+numeric_logical <- as.numeric(df$logical_var) 
+mean_numeric_logical <- mean(numeric_logical)
+```
+```{r}
+numeric_char <- as.numeric(df$char_var) 
+mean_numeric_char <- mean(numeric_char)# Not work
+```
+```{r}
+numeric_factor <- as.numeric(df$factor_var)
+mean_numeric_factor <- mean(numeric_factor)
+```
+* Numeric variable: The mean is calculated directly.
+* Logical variable: TRUE is treated as 1 and FALSE as 0, so the mean is calculated as the proportion of TRUE values.
+* Character variable: Cannot calculate the mean due to it cannot be coerced to numeric values. If converted to a numeric value, the result will be NA.
+* Factor variable: The factor can be converted to numeric to calculate the mean.
+
+
+
+
+
